@@ -1,6 +1,6 @@
 import RecipeCard from "./RecipeCard";
 
-export default function RecipeList({ data }) {
+export default function RecipeList({ data,fav,setFav}) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
             {data && data.length > 0 ? (
@@ -10,6 +10,8 @@ export default function RecipeList({ data }) {
                         itemId={item.id} 
                         itemTitle={item.title} 
                         itemImage={item.image}
+                        fav={fav}
+                        setFav={setFav}
                     />
                 ))
             ) : (

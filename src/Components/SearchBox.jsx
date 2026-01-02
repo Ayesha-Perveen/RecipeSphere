@@ -14,7 +14,7 @@ export default function SearchBox({ searchEle, setSearchEle,setData })
         e.preventDefault();
         if (searchEle.trim()) {
             setQuery(searchEle);
-            setSearchEle("");
+            setSearchEle("pizza");
         }
     }
 

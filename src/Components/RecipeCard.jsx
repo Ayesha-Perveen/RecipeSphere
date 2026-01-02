@@ -1,18 +1,38 @@
 import { MdOutlineArrowForwardIos } from "react-icons/md";
+import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavorite } from "react-icons/md";
 
-export default function RecipeCard({itemId,itemTitle,itemImage})
+export default function RecipeCard({itemId,itemTitle,itemImage,fav,setFav})
 {
+    const isFavorite = fav.some((f) => f.itemId === itemId);
+    const handleToggle = () => 
+        {
+        const recipeToToggle = { itemId, itemTitle, itemImage };
+        setFav((prevFav) => {
+            const alreadyExists = prevFav.some((fv) => fv.itemId === itemId);
+            if (alreadyExists) {
+                return prevFav.filter((f) => f.itemId !== itemId);
+            } else {
+                return [...prevFav, recipeToToggle];
+            }
+        });
+    };
+
     return (<>
-     <div>
-        <a href="#" class="flex flex-col items-center bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs md:flex-row md:max-w-xl md:flex-row md:max-w-xl">
-            <img class="object-cover w-full rounded-base h-64 md:h-auto md:w-48 mb-4 md:mb-0" src={itemImage} alt="Image of the food." />
-            <div class="flex flex-col justify-between md:p-4 leading-normal">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-heading">{itemTitle}</h5>
-                <p class="mb-6 text-body"></p>
-                <div>
-                    <button type="button" class="inline-flex items-center w-auto border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                         Recipe <MdOutlineArrowForwardIos/>
-                        
+     <div className="">
+        <a href="#" className="flex w-64px flex-col items-center p-4 border border-default rounded-xl shadow-2xl md:flex-row md:max-w-xl  ">
+            <img className="object-cover w-full rounded-4xl h-48 md:h-auto md:w-48 mb-4 md:mb-0" src={itemImage} alt="Image of the food." />
+            <div className="flex flex-col justify-between md:p-4 leading-normal">
+                <h5 className="mb-2 text-xl font-bold">{itemTitle}</h5>
+                <div className="p-2 flex ">
+                    <button type="button" className="inline-flex items-center w-auto border hover:bg-orange-400 focus:ring-2 shadow-l font-medium leading-5 rounded-xl text-m px-4 py-2.5 focus:outline-none mx-3 h-10 hover:scale-110 transition-transform cursor-pointer">
+                         Recipe  <MdOutlineArrowForwardIos className="h-6 ml-2 text-2xl"/>
+                    </button>
+                    <button type="button" 
+                    onClick={handleToggle}
+                    className=" h-10 inline-flex items-center border hover:bg-red-500 focus:ring-2  rounded-xl text-sm px-4 py-2.5 hover:scale-110 transition-transform cursor-pointer">
+                        {isFavorite ? <MdFavorite className="text-red-400 text-xl"/> : <MdFavoriteBorder className="text-2xl"/>}
+                         
                     </button>
                 </div>
             </div>
