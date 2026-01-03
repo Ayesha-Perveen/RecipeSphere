@@ -4,7 +4,7 @@ import InstructionCard from "./InstructionCard";
 export default function RecipeList({ data,fav,setFav,showRecipe,setShowRecipe}) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-           {!showRecipe ? (
+           {showRecipe==null ? (
                 data && data.length > 0 ? (
                     data.map((item) => (
                         <RecipeCard 

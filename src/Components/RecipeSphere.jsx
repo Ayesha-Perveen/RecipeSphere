@@ -8,11 +8,7 @@ export default function RecipeSphere()
     const[searchEle,setSearchEle]=useState("pizza");
     const[data,setData]=useState([]);
     const[fav,setFav]=useState([]);
-    const[showRecipe,setShowRecipe]=useState({
-        id:null,
-        title:null,
-        image:null,
-    });
+    const[showRecipe,setShowRecipe]=useState(null);
 
 
     return <>

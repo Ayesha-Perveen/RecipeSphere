@@ -3,7 +3,7 @@ import searchbar_bg from "../Assets/searchbar_bg.jpg";
 import { useEffect,useState } from "react";
 
 const url="https://api.spoonacular.com/recipes/complexSearch";
-const api_key="5dfde382d5c14fbf9314b9e895832c71";
+const api_key="a4ed99e7776b4a4fb4baade201ef6f17";
 
 export default function SearchBox({ searchEle, setSearchEle,setData }) 
 {
