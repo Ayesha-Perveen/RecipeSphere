@@ -11,9 +11,12 @@ export default function InstructionCard({showRecipe,setShowRecipe,onClose})
         equipment:null,
         steps:[]
     })
-    const api_key="a4ed99e7776b4a4fb4baade201ef6f17";
+    //"a4ed99e7776b4a4fb4baade201ef6f17"
+    //"5dfde382d5c14fbf9314b9e895832c71"
+    const api_key="5dfde382d5c14fbf9314b9e895832c71";
     const url1=`https://api.spoonacular.com/recipes/${showRecipe.id}/summary?apiKey=${api_key}`;
     const url2=`https://api.spoonacular.com/recipes/${showRecipe.id}/analyzedInstructions?apiKey=${api_key}`;
+    const url3=`https://api.spoonacular.com/recipes/${showRecipe.id}/information?includeNutrition=false&apiKey=${api_key}`;
     
     useEffect(()=>
     {
@@ -26,14 +29,16 @@ export default function InstructionCard({showRecipe,setShowRecipe,onClose})
             const data1=await sum.json();
             const ana=await fetch(url2)
             const data2=await ana.json();
+            const ing=await fetch(url3);
+            const data3=await ing.json();
             
             const steps = data2[0]?.steps || [];
 
             setDetails({
             summary: data1.summary,
             steps: steps,
-            ingredients: [...new Set(steps.flatMap(s => s.ingredients.map(i => i.name)))],
-            equipment: [...new Set(steps.flatMap(s => s.equipment.map(e => e.name)))]
+            equipment: [...new Set(steps.flatMap(s => s.equipment.map(e => e.name)))],
+            ingredients:data3,
             });
             } catch (error) {
                 console.error("Error fetching recipe data:", error);
@@ -71,10 +76,16 @@ export default function InstructionCard({showRecipe,setShowRecipe,onClose})
         <div className="max-w-5xl mx-auto mt-10">
             
             <div className="flex items-center justify-between p-4 ">
-                <h3 className="p-2 font-semibold text-2xl">{showRecipe.title}</h3>
+                <h3 className="p-2 font-semibold text-4xl">{showRecipe.title}</h3>
                 <img src={showRecipe.image} alt="food image" className="p-2 mx-2 rounded-3xl" />
             </div>
-            <h4 className="text-2xl font-semibold italic m-2">Summary :</h4>
+            <div className="text-orange-700 font-bold font-lg">
+                <span className="bg-gray-200 px-3 py-1 m-2 rounded-full ">Ready in : {details.ingredients.readyInMinutes} Minutes</span>
+                <span className="bg-gray-200 px-3 py-1 m-2 rounded-full ">No of Servings: {details.ingredients.servings} persons</span>
+                <span className="bg-gray-200 px-3 py-1 m-2 rounded-full ">Price Per Serving : $ {(details.ingredients.pricePerServing/100).toFixed(2)} </span>
+                <span className="bg-gray-200 px-3 py-1 m-2 rounded-full ">{details.ingredients.vegetarian?"Vegitarian":"Non-Vegitarian"}</span>
+            </div>
+            <h4 className="text-3xl font-semibold italic m-2">Summary :</h4>
             {details.summary && (
                 <div 
                     className="text-gray-800 p-2 mb-2 text-lg"
@@ -82,36 +93,39 @@ export default function InstructionCard({showRecipe,setShowRecipe,onClose})
                 />
             )}
             <div className="m-2 my-4">
-                <h2 className="text-2xl m-2 font-semibold italic">Equipments needed : </h2>
+                <h2 className="text-3xl m-2 font-semibold italic">Equipments needed : </h2>
                 {details.equipment && (
                 <div className="flex flex-wrap gap-2 mt-2">
-                    {details.equipment.map((item) => (
-                    <span key={item.id} className="bg-gray-200 px-3 py-1 rounded-full text-sm">
-                    {item}
+                    {details.equipment.map((it) => (
+                    <span key={it} className="bg-gray-200 px-3 py-1 rounded-full text-sm">
+                    {it}
                     </span>
                     ))}
                 </div>
                 )}
             </div>
             <div className="m-2 my-4">
-                <h2 className="text-2xl m-2 font-semibold italic">Ingredients needed : </h2>
-                {details.ingredients && (
-                <div className="flex flex-wrap gap-2 mt-2">
-                    {details.ingredients.map((item) => (
-                    <span key={item.id} className="bg-gray-200 px-3 py-1 rounded-full text-sm">
-                    {item}
-                    </span>
+                <h2 className="text-3xl m-2 font-semibold italic">Ingredients needed : </h2>
+                <ul  className="bg-gray-200 m-2 px-3 py-1 text-sm rounded-xl">
+                {details.ingredients.extendedIngredients && (
+                <div className="mt-2">
+                    {}
+                    {details.ingredients.extendedIngredients.map((det) => (
+                    <li key={det.id || det.name} className="p-1">
+                    <b>{det.name}</b> : {det.original}
+                    </li>
                     ))}
                 </div>
                 )}
+                </ul>
             </div>
             <div className="m-2 my-4">
-                <h2 className="text-2xl m-2 font-semibold italic">Steps : </h2>
+                <h2 className="text-3xl m-2 font-semibold italic">Steps : </h2>
                 {details.steps && (
                 <div className="flex flex-wrap gap-2 m-2">
                     {details.steps.map((item) => (
-                    <span key={item} className="p-1 text-xl">
-                    {item.number} {item.step}
+                    <span key={item.number} className="p-1 text-xl">
+                    <b>{item.number}.</b> {item.step}
                     </span>
                     ))}
                 </div>
