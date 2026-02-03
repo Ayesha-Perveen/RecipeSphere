@@ -5,7 +5,7 @@ import RecipeList from "./RecipeList";
 
 export default function RecipeSphere()
 {
-    const[searchEle,setSearchEle]=useState("pizza");
+    const[searchEle,setSearchEle]=useState("");
     const[data,setData]=useState([]);
     const[fav,setFav]=useState([]);
     const[showRecipe,setShowRecipe]=useState(null);
