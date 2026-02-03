@@ -9,10 +9,18 @@ export default function RecipeSphere()
     const[data,setData]=useState([]);
     const[fav,setFav]=useState([]);
     const[showRecipe,setShowRecipe]=useState(null);
+    const[showWishList,setShowWishList]=useState(false);
 
 
     return <>
-        <Header />
+        <Header 
+        fav={fav}
+        setFav={setFav}
+        showWishList={showWishList}
+        setShowWishList={setShowWishList}
+        showRecipe={showRecipe} 
+        setShowRecipe={setShowRecipe}
+        />
         <SearchBox 
         searchEle={searchEle} 
         setSearchEle={setSearchEle} 
@@ -24,6 +32,7 @@ export default function RecipeSphere()
         setFav={setFav} 
         showRecipe={showRecipe} 
         setShowRecipe={setShowRecipe}
+        setShowWishList={setShowWishList}
         />
         
     </>

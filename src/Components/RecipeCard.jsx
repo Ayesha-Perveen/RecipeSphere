@@ -20,7 +20,7 @@ export default function RecipeCard({itemId,itemTitle,itemImage,fav,setFav,setSho
 
     return (<>
      <div className="">
-        <a href="#" className="flex w-64px flex-col items-center p-4 border border-default rounded-xl shadow-2xl md:flex-row md:max-w-xl  ">
+        <a href="#" className="flex flex-col items-center p-4 border border-default rounded-xl shadow-2xl md:flex-row md:max-w-xl  ">
             <img 
             className="object-cover w-full rounded-4xl h-48 md:h-auto md:w-48 mb-4 md:mb-0" 
             src={itemImage} 
@@ -29,7 +29,7 @@ export default function RecipeCard({itemId,itemTitle,itemImage,fav,setFav,setSho
                 <h5 className="mb-2 text-xl font-bold">{itemTitle}</h5>
                 <div className="p-2 flex ">
                     <button type="button" 
-                    className="inline-flex items-center w-auto border hover:bg-orange-400 focus:ring-2 shadow-l font-medium leading-5 rounded-xl text-m px-4 py-2.5 focus:outline-none mx-3 h-10 hover:scale-110 transition-transform cursor-pointer"
+                    className="inline-flex items-center px-4 py-2 h-10 bg-white border border-gray-200 rounded-xl font-medium text-gray-800 hover:bg-orange-400 hover:scale-110 transition-transform cursor-pointer focus:ring-2 focus:outline-none text-l" 
                     onClick={()=>{
                         setShowRecipe({
                             id:itemId,
